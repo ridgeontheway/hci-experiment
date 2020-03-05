@@ -11,7 +11,7 @@ export default class ClickTestScreen extends Component {
       showSuccessScreen: false,
       deviceName: null,
       thirdTrialData: null,
-      secondTrialDat: null,
+      secondTrialData: null,
       firstTrialData: null,
       currentTrial: 0
     };
@@ -31,10 +31,9 @@ export default class ClickTestScreen extends Component {
   experimentContinueCheck() {
     if (
       this.state.firstTrialData &&
-      this.state.secondTrialDat &&
+      this.state.secondTrialData &&
       this.state.thirdTrialData
     ) {
-      console.log("am I here?");
       this.setState({ showSuccessScreen: true });
     } else {
       var generated = false;
@@ -44,7 +43,7 @@ export default class ClickTestScreen extends Component {
         if (trialNumber === 1 && !this.state.firstTrialData) {
           generated = true;
           this.setState({ currentTrial: 1 });
-        } else if (trialNumber === 2 && !this.state.secondTrialDat) {
+        } else if (trialNumber === 2 && !this.state.secondTrialData) {
           generated = true;
           this.setState({ currentTrial: 2 });
         } else if (trialNumber === 3 && !this.state.thirdTrialData) {
@@ -55,8 +54,12 @@ export default class ClickTestScreen extends Component {
     }
   }
 
-  finishTrail(_participantID, _trialID, _timeTaken) {
+  finishTrail(_participantID, _trialID, _timeTaken, _deviceName) {
+    if (!this.state.deviceName) {
+      this.setState({ deviceName: _deviceName });
+    }
     const trialData = [_participantID, _trialID, _timeTaken];
+    console.log(this.state.collectedExperimentData);
     console.log(trialData);
     if (_trialID === 1) {
       console.log("this is trial 1");
@@ -70,7 +73,7 @@ export default class ClickTestScreen extends Component {
       console.log("this is trial 2");
       this.setState(
         {
-          secondTrialDat: trialData
+          secondTrialData: trialData
         },
         () => this.experimentContinueCheck()
       );
@@ -108,10 +111,16 @@ export default class ClickTestScreen extends Component {
           ) : null}
         </div>
         <ExperimentFinishPopup
-          save_experiment_info={this.saveExperimentInfo}
+          resetExperiment={this.saveExperimentInfo}
           show={this.state.showSuccessScreen}
+          trialData={[
+            this.state.firstTrialData,
+            this.state.secondTrialData,
+            this.state.thirdTrialData
+          ]}
           title="Input device experiment"
           onHide={() => this.togglePopUp(false)}
+          deviceName={this.state.deviceName}
         />
       </div>
     );

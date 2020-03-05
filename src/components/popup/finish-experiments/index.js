@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { CSVLink } from "react-csv";
 import "../styles.css";
 export default class ExperimentFinishPopup extends Component {
-  handleOnClick(event) {
-    event.preventDefault();
-    const selectedDevice = event.target.device.value;
-    const selectedID = event.target.id.value;
-    this.props.send_experiment_info(selectedDevice, selectedID);
+  constructor(props) {
+    super(props);
+    this.saveExperimentData = this.saveExperimentData.bind(this);
   }
+
+  saveExperimentData() {}
   render() {
     return (
       <Modal
@@ -26,34 +26,20 @@ export default class ExperimentFinishPopup extends Component {
         </Modal.Header>
         <Modal.Body>
           <div className="content__wrapper">
-            <Form
-              onSubmit={e => {
-                this.handleOnClick(e);
-              }}
+            <p>
+              You have successfully finished all the trials with the{" "}
+              {this.props.deviceName} input device
+            </p>
+            <p>Press the button below to save the results</p>
+            <CSVLink
+              data={this.props.trialData}
+              filename={this.props.deviceName + ".csv"}
+              className="btn btn-primary"
+              target="_blank"
+              onClick={this.props.resetExperiment}
             >
-              <p>
-                Please fill the relevant information before starting the trial
-              </p>
-              <Form.Group controlId="id">
-                <Form.Label>Assigned ID</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your assigned ID"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="device">
-                <Form.Label>Input Device</Form.Label>
-                <Form.Control as="select" ref={this.genderInput}>
-                  <option>Trackpoint</option>
-                  <option>Mouse</option>
-                </Form.Control>
-              </Form.Group>
-
-              <Button variant="primary" type="submit">
-                Save Trial Information
-              </Button>
-            </Form>
+              Download
+            </CSVLink>
           </div>
         </Modal.Body>
       </Modal>
@@ -62,6 +48,8 @@ export default class ExperimentFinishPopup extends Component {
 }
 
 ExperimentFinishPopup.propTypes = {
-  save_experiment_info: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired
+  resetExperiment: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  deviceName: PropTypes.string,
+  trialData: PropTypes.array
 };

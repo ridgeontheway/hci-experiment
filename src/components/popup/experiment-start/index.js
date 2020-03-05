@@ -50,7 +50,7 @@ export default class ExperimentStartPopup extends Component {
                 </Form.Control>
               </Form.Group>
 
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="submit" block>
                 Save Trial Information
               </Button>
             </Form>

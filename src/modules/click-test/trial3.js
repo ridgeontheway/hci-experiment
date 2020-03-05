@@ -52,7 +52,8 @@ export default class TrialThree extends Component {
     this.props.trialEnded(
       this.state.participantID,
       this.props.trialNumber,
-      timeTaken
+      timeTaken,
+      this.state.deviceName
     );
   }
 

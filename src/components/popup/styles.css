@@ -4,5 +4,6 @@
   display: -ms-flexbox; /* TWEENER - IE 10 */
   display: -webkit-flex; /* NEW - Chrome */
   flex-direction: column;
+  align-items: center;
   background-color: white;
 }
