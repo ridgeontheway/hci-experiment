@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CircleComponent from "../../components/circle";
 import ExperimentStartPopup from "../../components/popup/experiment-start";
 import Toast from "react-bootstrap/Toast";
+import "./t1Styles.css";
 import "../styles.css";
 export default class TrialOne extends Component {
   constructor() {
@@ -19,10 +20,15 @@ export default class TrialOne extends Component {
     this.saveExperimentInfo = this.saveExperimentInfo.bind(this);
     this.toggleInitialCircle = this.toggleInitialCircle.bind(this);
     this.endExperiment = this.endExperiment.bind(this);
+    this.togglePopUp = this.togglePopUp.bind(this);
   }
 
   toggleToast(show) {
     this.setState({ showToast: show });
+  }
+
+  togglePopUp(show) {
+    this.setState({ showUserPopUp: show });
   }
 
   toggleInitialCircle() {
@@ -52,14 +58,15 @@ export default class TrialOne extends Component {
     this.props.trialEnded(
       this.state.participantID,
       this.props.trialNumber,
-      timeTaken
+      timeTaken,
+      this.state.deviceName
     );
   }
 
   render() {
     return (
       <div className="backgroundDiv">
-        <div className="toastDiv">
+        <div className="trial1-toastDiv">
           <Toast
             onClose={() => this.toggleToast(false)}
             show={this.state.showToast}
@@ -74,10 +81,10 @@ export default class TrialOne extends Component {
           </Toast>
         </div>
 
-        <div className="targetDiv">
+        <div className="trial1-targetDiv">
           <CircleComponent circleType="target" onPress={this.endExperiment} />
         </div>
-        <div className="initialDiv">
+        <div className="trial1-initialDiv">
           {this.state.showInitialCircle ? (
             <CircleComponent
               circleType="initial"
@@ -86,9 +93,9 @@ export default class TrialOne extends Component {
           ) : null}
         </div>
         <ExperimentStartPopup
-          send_experiment_info={this.saveExperimentInfo}
+          sendExperimentInfo={this.saveExperimentInfo}
           show={this.state.showUserPopUp}
-          title="Input device experiment"
+          title={"Trial: " + this.props.trialsCompleted + " / 3"}
           onHide={() => this.togglePopUp(false)}
         />
       </div>
@@ -98,5 +105,6 @@ export default class TrialOne extends Component {
 
 TrialOne.propTypes = {
   trialNumber: PropTypes.number.isRequired,
-  trialEnded: PropTypes.func.isRequired
+  trialEnded: PropTypes.func.isRequired,
+  trialsCompleted: PropTypes.number
 };

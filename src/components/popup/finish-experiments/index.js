@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import PropTypes from "prop-types";
-import Button from "react-bootstrap/Button";
 import { CSVLink } from "react-csv";
 import "../styles.css";
 export default class ExperimentFinishPopup extends Component {

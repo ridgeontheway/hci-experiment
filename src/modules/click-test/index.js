@@ -13,7 +13,8 @@ export default class ClickTestScreen extends Component {
       thirdTrialData: null,
       secondTrialData: null,
       firstTrialData: null,
-      currentTrial: 0
+      currentTrial: 0,
+      numTrialsCompleted: 1
     };
     this.finishTrail = this.finishTrail.bind(this);
     this.experimentContinueCheck = this.experimentContinueCheck.bind(this);
@@ -65,7 +66,8 @@ export default class ClickTestScreen extends Component {
       console.log("this is trial 1");
       this.setState(
         {
-          firstTrialData: trialData
+          firstTrialData: trialData,
+          numTrialsCompleted: this.state.numTrialsCompleted + 1
         },
         () => this.experimentContinueCheck()
       );
@@ -73,7 +75,8 @@ export default class ClickTestScreen extends Component {
       console.log("this is trial 2");
       this.setState(
         {
-          secondTrialData: trialData
+          secondTrialData: trialData,
+          numTrialsCompleted: this.state.numTrialsCompleted + 1
         },
         () => this.experimentContinueCheck()
       );
@@ -81,7 +84,8 @@ export default class ClickTestScreen extends Component {
       console.log("this is trial 3");
       this.setState(
         {
-          thirdTrialData: trialData
+          thirdTrialData: trialData,
+          numTrialsCompleted: this.state.numTrialsCompleted + 1
         },
         () => this.experimentContinueCheck()
       );
@@ -97,17 +101,29 @@ export default class ClickTestScreen extends Component {
       <div>
         <div>
           {this.state.currentTrial === 1 ? (
-            <TrialOne trialNumber={1} trialEnded={this.finishTrail} />
+            <TrialOne
+              trialNumber={1}
+              trialsCompleted={this.state.numTrialsCompleted}
+              trialEnded={this.finishTrail}
+            />
           ) : null}
         </div>
         <div>
           {this.state.currentTrial === 2 ? (
-            <TrialTwo trialNumber={2} trialEnded={this.finishTrail} />
+            <TrialTwo
+              trialNumber={2}
+              trialsCompleted={this.state.numTrialsCompleted}
+              trialEnded={this.finishTrail}
+            />
           ) : null}
         </div>
         <div>
           {this.state.currentTrial === 3 ? (
-            <TrialThree trialNumber={3} trialEnded={this.finishTrail} />
+            <TrialThree
+              trialNumber={3}
+              trialsCompleted={this.state.numTrialsCompleted}
+              trialEnded={this.finishTrail}
+            />
           ) : null}
         </div>
         <ExperimentFinishPopup
@@ -118,7 +134,7 @@ export default class ClickTestScreen extends Component {
             this.state.secondTrialData,
             this.state.thirdTrialData
           ]}
-          title="Input device experiment"
+          title="Download Results"
           onHide={() => this.togglePopUp(false)}
           deviceName={this.state.deviceName}
         />

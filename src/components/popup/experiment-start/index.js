@@ -9,7 +9,7 @@ export default class ExperimentStartPopup extends Component {
     event.preventDefault();
     const selectedDevice = event.target.device.value;
     const selectedID = event.target.id.value;
-    this.props.send_experiment_info(selectedDevice, selectedID);
+    this.props.sendExperimentInfo(selectedDevice, selectedID);
   }
   render() {
     return (
@@ -62,6 +62,6 @@ export default class ExperimentStartPopup extends Component {
 }
 
 ExperimentStartPopup.propTypes = {
-  send_experiment_info: PropTypes.func.isRequired,
+  sendExperimentInfo: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired
 };

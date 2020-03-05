@@ -1,0 +1,19 @@
+.trial1-targetDiv {
+  padding: 10px;
+  width: fit-content;
+  position: absolute;
+  right: 0;
+}
+
+.trial1-initialDiv {
+  padding: 10px;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+.trial1-toastDiv {
+  width: fit-content;
+  position: absolute;
+  left: 0;
+}

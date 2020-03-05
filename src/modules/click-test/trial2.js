@@ -4,6 +4,7 @@ import CircleComponent from "../../components/circle";
 import ExperimentStartPopup from "../../components/popup/experiment-start";
 import Toast from "react-bootstrap/Toast";
 import "../styles.css";
+import "./t2Styles.css";
 export default class TrialTwo extends Component {
   constructor() {
     super();
@@ -52,14 +53,15 @@ export default class TrialTwo extends Component {
     this.props.trialEnded(
       this.state.participantID,
       this.props.trialNumber,
-      timeTaken
+      timeTaken,
+      this.state.deviceName
     );
   }
 
   render() {
     return (
       <div className="backgroundDiv">
-        <div className="toastDiv">
+        <div className="trial2-toastDiv">
           <Toast
             onClose={() => this.toggleToast(false)}
             show={this.state.showToast}
@@ -74,10 +76,10 @@ export default class TrialTwo extends Component {
           </Toast>
         </div>
 
-        <div className="targetDiv">
+        <div className="trial2-targetDiv">
           <CircleComponent circleType="target" onPress={this.endExperiment} />
         </div>
-        <div className="initialDiv">
+        <div className="trial2-initialDiv">
           {this.state.showInitialCircle ? (
             <CircleComponent
               circleType="initial"
@@ -86,9 +88,9 @@ export default class TrialTwo extends Component {
           ) : null}
         </div>
         <ExperimentStartPopup
-          send_experiment_info={this.saveExperimentInfo}
+          sendExperimentInfo={this.saveExperimentInfo}
           show={this.state.showUserPopUp}
-          title="Input device experiment"
+          title={"Trial: " + this.props.trialsCompleted + " / 3"}
           onHide={() => this.togglePopUp(false)}
         />
       </div>
@@ -98,5 +100,6 @@ export default class TrialTwo extends Component {
 
 TrialTwo.propTypes = {
   trialNumber: PropTypes.number.isRequired,
-  trialEnded: PropTypes.func.isRequired
+  trialEnded: PropTypes.func.isRequired,
+  trialsCompleted: PropTypes.number
 };

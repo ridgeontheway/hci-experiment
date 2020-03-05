@@ -4,6 +4,7 @@ import CircleComponent from "../../components/circle";
 import ExperimentStartPopup from "../../components/popup/experiment-start";
 import Toast from "react-bootstrap/Toast";
 import "../styles.css";
+import "./t3Styles.css";
 export default class TrialThree extends Component {
   constructor() {
     super();
@@ -60,7 +61,7 @@ export default class TrialThree extends Component {
   render() {
     return (
       <div className="backgroundDiv">
-        <div className="toastDiv">
+        <div className="trial3toastDiv">
           <Toast
             onClose={() => this.toggleToast(false)}
             show={this.state.showToast}
@@ -75,10 +76,10 @@ export default class TrialThree extends Component {
           </Toast>
         </div>
 
-        <div className="targetDiv">
+        <div className="trial3-targetDiv ">
           <CircleComponent circleType="target" onPress={this.endExperiment} />
         </div>
-        <div className="initialDiv">
+        <div className="trial3-initialDiv">
           {this.state.showInitialCircle ? (
             <CircleComponent
               circleType="initial"
@@ -87,9 +88,9 @@ export default class TrialThree extends Component {
           ) : null}
         </div>
         <ExperimentStartPopup
-          send_experiment_info={this.saveExperimentInfo}
+          sendExperimentInfo={this.saveExperimentInfo}
           show={this.state.showUserPopUp}
-          title="Input device experiment"
+          title={"Trial: " + this.props.trialsCompleted + " / 3"}
           onHide={() => this.togglePopUp(false)}
         />
       </div>
@@ -99,5 +100,6 @@ export default class TrialThree extends Component {
 
 TrialThree.propTypes = {
   trialNumber: PropTypes.number.isRequired,
-  trialEnded: PropTypes.func.isRequired
+  trialEnded: PropTypes.func.isRequired,
+  trialsCompleted: PropTypes.number
 };
